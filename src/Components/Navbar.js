@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "./Navbar.Module.css";
+
 function Navbar() {
   return (
     <div>
@@ -9,6 +10,9 @@ function Navbar() {
             <NavLink to="/reservation">Home</NavLink>
           </li>
           <li>
+            <NavLink to="/memberresister">Member Registration</NavLink>
+          </li>
+          <li>
             <NavLink to="/cancelbooking">Cancel Booking</NavLink>
           </li>
           <li>
@@ -16,6 +20,9 @@ function Navbar() {
           </li>
           <li>
             <NavLink to="/cutomercare">Customer care </NavLink>
+          </li>
+          <li className="login-button">
+            <NavLink to="/login">Login</NavLink>
           </li>
         </ul>
       </nav>

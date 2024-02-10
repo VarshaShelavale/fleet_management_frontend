@@ -4,6 +4,8 @@ import About from "./About";
 import Customercare from "./Customercare";
 import CancelBooking from "./CancelBooking";
 import ReservationForm from "./ReservationForm";
+import MemberRegisterForm from "./MemberRegisterForm";
+import Login from "./Login";
 function Main() {
   return (
     <div>
@@ -23,6 +25,11 @@ function Main() {
               path="/reservation"
               element={<ReservationForm></ReservationForm>}
             ></Route>
+            <Route
+              path="/memberresister"
+              element={<MemberRegisterForm></MemberRegisterForm>}
+            ></Route>
+            <Route path="/login" element={<Login></Login>}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

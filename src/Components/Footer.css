@@ -1,0 +1,10 @@
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 10px 0;
+  z-index: 999; /* Ensure footer is above other elements */
+}
