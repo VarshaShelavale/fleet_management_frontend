@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Addon.css";
 
 const AddOnpage = () => {
+  const navigate = useNavigate();
   const [selectedAddons, setSelectedAddons] = useState({
     gps: false,
     campingKit: false,
@@ -29,6 +31,7 @@ const AddOnpage = () => {
     sessionStorage.setItem("selectedAddons", JSON.stringify(selectedAddons));
     // Perform any additional actions or navigation here
     console.log("Selected Addons:", selectedAddons);
+    navigate("/login", { state: "formfill" });
   };
 
   return (
@@ -71,7 +74,11 @@ const AddOnpage = () => {
           <option value="4">4</option>
         </select>
       </div>
-      <input type="submit" value="Continue" onClick={handleContinueClick} />
+      <input
+        type="submit"
+        value="Continue booking"
+        onClick={handleContinueClick}
+      />
     </div>
   );
 };

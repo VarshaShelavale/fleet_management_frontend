@@ -1,8 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import "./Login.css";
 import React, { useState } from "react";
 
 function Login() {
+  const location = useLocation();
+  const state = location.state;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -63,11 +65,18 @@ function Login() {
             Login as User
           </button>
         </div>
-        <div className="login-options">
-          <button type="submit" onClick={adminsubmit}>
-            Login as Admin
-          </button>
-        </div>
+        {state == "formfill" && (
+          <p>
+            You don't have account ? <Link to="/memberresister">Register</Link>
+          </p>
+        )}
+        {state != "formfill" && (
+          <div className="login-options">
+            <button type="submit" onClick={adminsubmit}>
+              Login as Admin
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );

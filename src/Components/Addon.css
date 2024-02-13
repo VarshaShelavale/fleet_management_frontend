@@ -10,12 +10,16 @@
 .addon-container {
   display: flex;
   flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #9bccef; /* Component background color */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.5s ease; /* Fade-in animation */
+  max-width: 400px; /* Limit width for compactness */
+  margin: 0 auto; /* Center horizontally */
 }
 
 @keyframes fadeIn {
