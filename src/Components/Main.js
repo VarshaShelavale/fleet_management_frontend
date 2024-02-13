@@ -6,6 +6,9 @@ import CancelBooking from "./CancelBooking";
 import ReservationForm from "./ReservationForm";
 import MemberRegisterForm from "./MemberRegisterForm";
 import Login from "./Login";
+import HubSelect from "./HubSelect";
+import CarCategory from "./CarCategory";
+import AddOnpage from "./AddOnpage";
 function Main() {
   return (
     <div>
@@ -26,9 +29,16 @@ function Main() {
               element={<ReservationForm></ReservationForm>}
             ></Route>
             <Route
+              path="/carcategory/:id"
+              element={<CarCategory></CarCategory>}
+            ></Route>
+            <Route path="/hubs/:id" element={<HubSelect></HubSelect>}></Route>
+            <Route path="/addon" element={<AddOnpage></AddOnpage>}></Route>
+            <Route
               path="/memberresister"
               element={<MemberRegisterForm></MemberRegisterForm>}
             ></Route>
+
             <Route path="/login" element={<Login></Login>}></Route>
           </Route>
         </Routes>

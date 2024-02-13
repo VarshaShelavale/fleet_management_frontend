@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import "./Reservation.Module.css";
+import { useNavigate } from "react-router-dom";
 function ReservationForm() {
+  const [selectedOption, setSelectedOption] = useState(true);
+  const [selectedOption2, setSelectedOption2] = useState(true);
+  const [pairportid, setpairport] = useState(0);
+  const [rairportid, setrairport] = useState(0);
   const [states, setState] = useState([]);
   const [pcities, setpCities] = useState([]);
   const [rcities, setrCities] = useState([]);
@@ -8,12 +13,14 @@ function ReservationForm() {
   const [pickupDate, setPickupDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [airportCodepickUp, setAirportCodePickUp] = useState("");
-  const [pickupCity, setPickupCity] = useState("");
-  const [returnCity, setReturnCity] = useState("");
+  const [pickupCity, setPickupCity] = useState(0);
+  const [returnCity, setReturnCity] = useState();
   const [airportCodereturn, setAirportCodeReturn] = useState("");
   const [pickUpState, setPickUpState] = useState(0);
   const [returnState, setReturnState] = useState(0);
-
+  const [rstate, setrState] = useState("");
+  const [pstate, setpState] = useState("");
+  const navigate = useNavigate();
   useEffect(function () {}, []);
   function handleSubmit(e) {
     e.preventDefault();
@@ -24,25 +31,58 @@ function ReservationForm() {
       pickupCity,
       returnCity,
       airportCodereturn,
-      pickUpState,
-      returnState,
+      pickUpState: pstate,
+      returnState: rstate,
     };
     console.log(data);
+    if (pairportid) {
+      navigate("/hubs/" + pairportid, { state: "airportid" });
+    }
+
+    if (pickupCity) {
+      navigate("/hubs/" + pickupCity, { state: "cityid" });
+    }
   }
+
+  useEffect(() => {
+    function getcode(code, setairport) {
+      fetch("http://localhost:8080/api/airports/" + code)
+        .then((res) => res.json())
+        .then((data) => {
+          setairport(data.airport_id);
+        });
+    }
+    if (airportCodepickUp) getcode(airportCodepickUp, setpairport);
+    if (airportCodereturn) getcode(airportCodereturn, setrairport);
+  }, [airportCodepickUp, airportCodereturn]);
+  useEffect(() => {
+    function getState(stateid, setstate) {
+      const data = states.filter((state) => stateid == state.id);
+      setstate(data[0].name);
+    }
+    if (pickUpState) {
+      getState(pickUpState, setpState);
+    }
+    if (returnState) {
+      getState(returnState, setrState);
+    }
+  }, [pickUpState, returnState]);
+
   useEffect((e) => {
-    fetch("http://localhost:8080/api/airports")
+    fetch("http://localhost:8080/api/getairports")
       .then((res) => res.json())
       .then((data) => setairports(data));
   }, []);
   useEffect((e) => {
     fetch("http://localhost:8080/api/states")
       .then((res) => res.json())
-      .then((data) => setState(data));
+      .then((data) => {
+        setState(data);
+      });
   }, []);
   useEffect(() => {
     // Fetch cities for the selected state
     const fetchCities = async (stateid, setCities) => {
-      console.log("id is" + pickUpState);
       try {
         const response = await fetch(
           "http://localhost:8080/api/cities/" + stateid
@@ -96,119 +136,145 @@ function ReservationForm() {
               <div className="form-group">
                 <label>PickUp Location :</label>
               </div>
-              <div className="form-group">
-                <label htmlFor="pickupLocation">Airport Code:</label>
+              <label>
                 <input
-                  type="text"
-                  id="pickupLocation"
-                  name="pickupLocation"
-                  value={airportCodepickUp}
-                  onChange={(e) => setAirportCodePickUp(e.target.value)}
+                  type="radio"
+                  checked={!selectedOption}
+                  onClick={() => setSelectedOption(!selectedOption)}
                 />
-                <select
-                  id="pickupAirport"
-                  name="pickupAirport"
-                  onChange={(e) => setAirportCodePickUp(e.target.value)}
-                >
-                  <option>Select</option>
-                  {airports.map((airport) => (
-                    <option
-                      key={airport.airport_code}
-                      value={airport.airport_code}
-                    >
-                      {airport.airport_name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="pickupState">State:</label>
+                Do you want to select using Airport ?
+              </label>
+              {selectedOption ? (
+                <div className="form-group">
+                  <label htmlFor="pickupState">State:</label>
 
-                <select
-                  id="pickupState"
-                  name="pickupState"
-                  onChange={(e) => setPickUpState(e.target.value)}
-                >
-                  <option>Select</option>
-                  {states.map((state) => (
-                    <option key={state.id} value={state.id}>
-                      {state.name}
-                    </option>
-                  ))}
-                </select>
-                <label htmlFor="pickupCity">Pickup City:</label>
+                  <select
+                    id="pickupState"
+                    name="pickupState"
+                    onChange={(e) => {
+                      setPickUpState(e.target.value);
+                    }}
+                  >
+                    <option>Select</option>
+                    {states.map((state) => (
+                      <option key={state.id} value={state.id}>
+                        {state.name}
+                      </option>
+                    ))}
+                  </select>
+                  <label htmlFor="pickupCity">Pickup City:</label>
 
-                <select
-                  id="pickupCity"
-                  name="pickupCity"
-                  onChange={(e) => setPickupCity(e.target.value)}
-                >
-                  <option>Select</option>
-                  {pcities.map((city) => (
-                    <option key={city.id} value={city.id}>
-                      {city.cityName}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  <select
+                    id="pickupCity"
+                    name="pickupCity"
+                    onChange={(e) => setPickupCity(e.target.value)}
+                  >
+                    <option>Select</option>
+                    {pcities.map((city) => (
+                      <option key={city.cityId} value={city.cityId}>
+                        {city.cityName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                <div className="form-group">
+                  <label htmlFor="pickupLocation">Airport Code:</label>
+                  <input
+                    type="text"
+                    id="pickupLocation"
+                    name="pickupLocation"
+                    value={airportCodepickUp}
+                    onChange={(e) => setAirportCodePickUp(e.target.value)}
+                  />
+                  <select
+                    id="pickupAirport"
+                    name="pickupAirport"
+                    onChange={(e) => setAirportCodePickUp(e.target.value)}
+                  >
+                    <option>Select</option>
+                    {airports.map((airport) => (
+                      <option
+                        key={airport.airport_code}
+                        value={airport.airport_code}
+                      >
+                        {airport.airport_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               <div className="form-group">
                 <label>Return Location :</label>
               </div>
-              <div className="form-group">
-                <label htmlFor="returnLocation">Airport Code :</label>
+              <label>
                 <input
-                  type="text"
-                  id="returnLocation"
-                  name="returnLocation"
-                  value={airportCodereturn}
-                  onChange={(e) => setAirportCodeReturn(e.target.value)}
+                  type="radio"
+                  checked={!selectedOption2}
+                  onClick={() => setSelectedOption2(!selectedOption2)}
                 />
-                <select
-                  id="returnAirport"
-                  name="returnAirport"
-                  onChange={(e) => setAirportCodeReturn(e.target.value)}
-                >
-                  <option>Select</option>
-                  {airports.map((airport) => (
-                    <option
-                      key={airport.airport_code}
-                      value={airport.airport_code}
-                    >
-                      {airport.airport_name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="returnState">Return State:</label>
+                Do you want to select using Airport ?
+              </label>
+              {!selectedOption2 ? (
+                <div className="form-group">
+                  <label htmlFor="returnLocation">Airport Code :</label>
+                  <input
+                    type="text"
+                    id="returnLocation"
+                    name="returnLocation"
+                    value={airportCodereturn}
+                    onChange={(e) => setAirportCodeReturn(e.target.value)}
+                  />
+                  <select
+                    id="returnAirport"
+                    name="returnAirport"
+                    onChange={(e) => setAirportCodeReturn(e.target.value)}
+                  >
+                    <option>Select</option>
+                    {airports.map((airport) => (
+                      <option
+                        key={airport.airport_code}
+                        value={airport.airport_code}
+                      >
+                        {airport.airport_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                <div className="form-group">
+                  <label htmlFor="returnState">Return State:</label>
 
-                <select
-                  id="returnState"
-                  name="returnState"
-                  onChange={(e) => setReturnState(e.target.value)}
-                >
-                  <option>Select</option>
-                  {states.map((state) => (
-                    <option key={state.id} value={state.id}>
-                      {state.name}
-                    </option>
-                  ))}
-                </select>
-                <label htmlFor="returnCity">Return City:</label>
+                  <select
+                    id="returnState"
+                    name="returnState"
+                    onChange={(e) => setReturnState(e.target.value)}
+                  >
+                    <option>Select</option>
+                    {states.map((state) => (
+                      <option key={state.id} value={state.id}>
+                        {state.name}
+                      </option>
+                    ))}
+                  </select>
+                  <label htmlFor="returnCity">Return City:</label>
 
-                <select
-                  id="returnCity"
-                  name="returnCity"
-                  onChange={(e) => setReturnCity(e.target.value)}
-                >
-                  <option>Select</option>
-                  {rcities.map((city) => (
-                    <option key={city.id} value={city.id}>
-                      {city.cityName}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  <select
+                    id="returnCity"
+                    name="returnCity"
+                    onChange={(e) => setReturnCity(e.target.value)}
+                  >
+                    <option>Select</option>
+                    {rcities.map((city) => (
+                      <option key={city.cityId} value={city.cityId}>
+                        {city.cityName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
               <button type="submit">Continue Booking</button>
             </form>
           </div>
