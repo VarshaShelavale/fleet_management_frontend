@@ -9,6 +9,7 @@ import Login from "./Login";
 import HubSelect from "./HubSelect";
 import CarCategory from "./CarCategory";
 import AddOnpage from "./AddOnpage";
+import Booking from "./Booking";
 function Main() {
   return (
     <div>
@@ -33,7 +34,9 @@ function Main() {
               element={<CarCategory></CarCategory>}
             ></Route>
             <Route path="/hubs/:id" element={<HubSelect></HubSelect>}></Route>
+            <Route path="/pickuphubs" element={<HubSelect></HubSelect>}></Route>
             <Route path="/addon" element={<AddOnpage></AddOnpage>}></Route>
+            <Route path="/booking" element={<Booking></Booking>}></Route>
             <Route
               path="/memberresister"
               element={<MemberRegisterForm></MemberRegisterForm>}

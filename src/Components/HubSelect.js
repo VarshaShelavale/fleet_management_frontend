@@ -27,19 +27,60 @@ function HubSelect() {
         });
     }
   }, []);
-
+  useEffect((e) => {
+    if (state == null && sessionStorage.getItem("pickupcityid")) {
+      fetch(
+        "http://localhost:8080/api/hubs/" +
+          sessionStorage.getItem("pickupcityid")
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setHubs(data);
+        });
+    }
+  }, []);
+  useEffect((e) => {
+    if (state == null && sessionStorage.getItem("pickupairid")) {
+      fetch(
+        "http://localhost:8080/api/hub/" + sessionStorage.getItem("pickupairid")
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setHubs(data);
+        });
+    }
+  }, []);
   const handleHubSelection = (event) => {
+    if (state) {
+      sessionStorage.setItem("returnhubid", event.target.value);
+      console.log(event.target.value);
+    }
+    if (state == null) {
+      sessionStorage.setItem("pickuphubid", event.target.value);
+    }
     setSelectedHub(event.target.value);
   };
   const submitForm = (e) => {
     e.preventDefault();
-    console.log(selectedHub);
-    navigate("/carcategory/" + selectedHub);
+    if (state) {
+      navigate("/pickuphubs");
+    }
+    if (state == null) {
+      navigate("/carcategory/" + selectedHub);
+    }
   };
   return (
     <div className="hubSelectContainer">
       <form className="hubForm" onSubmit={submitForm}>
-        +
+        {state ? (
+          <p>
+            Please select your <strong>return </strong>location..
+          </p>
+        ) : (
+          <p>
+            Please select your <strong> pickup </strong>location..
+          </p>
+        )}
         {hubs.map((hub) => (
           <div key={hub.Hub_id} className="hubOption">
             <input

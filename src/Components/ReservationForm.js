@@ -34,13 +34,20 @@ function ReservationForm() {
       pickUpState: pstate,
       returnState: rstate,
     };
+    sessionStorage.setItem("pickUpdate", pickupDate);
+    sessionStorage.setItem("returndata", returnDate);
+    if (pickupCity || airportCodepickUp) {
+      returnCity
+        ? sessionStorage.setItem("pickupcityid", pickupCity)
+        : sessionStorage.setItem("pickupairid", returnCity);
+    }
     console.log(data);
-    if (pairportid) {
-      navigate("/hubs/" + pairportid, { state: "airportid" });
+    if (rairportid) {
+      navigate("/hubs/" + rairportid, { state: "airportid" });
     }
 
-    if (pickupCity) {
-      navigate("/hubs/" + pickupCity, { state: "cityid" });
+    if (returnCity) {
+      navigate("/hubs/" + returnCity, { state: "cityid" });
     }
   }
 

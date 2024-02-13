@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MDBBtn, MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
 
 import "./CarCategorymodule.css";
@@ -9,13 +9,16 @@ function CarCategory() {
   const [carcategory, setCarCategory] = useState([]);
   // Add state to track hover status
   const [hoveredCarId, setHoveredCarId] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetch("http://localhost:8080/api/cars/" + id)
       .then((res) => res.json())
       .then((data) => setCarCategory(data));
   }, [id]);
-
+  const handleSelect = (e) => {
+    sessionStorage.setItem("selectedcartype", JSON.stringify(e));
+    navigate("/addon");
+  };
   return carcategory.map((car) => (
     <MDBTable key={car.cartype_Master.cartype_id} align="middle">
       <MDBTableHead>
@@ -64,7 +67,7 @@ function CarCategory() {
           <td>{car.cartype_Master.weekly_Rate}</td>
           <td>{car.cartype_Master.month_Rate}</td>
           <td>
-            <MDBBtn color="link" rounded size="sm">
+            <MDBBtn color="link" rounded size="sm" onClick={handleSelect(car)}>
               Select
             </MDBBtn>
           </td>

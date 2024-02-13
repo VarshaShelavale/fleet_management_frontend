@@ -19,8 +19,12 @@ function Login() {
         `http://localhost:8080/api/register/${email}/${password}`
       );
       const result = await response.json();
+      sessionStorage.setItem("userinfo", JSON.stringify(result));
       console.log(result);
-      navigate("/reservation");
+
+      if (state === "formfill") {
+        navigate("/booking");
+      } else navigate("/reservation");
     } catch (error) {
       console.error("Error fetching data:", error);
     }
