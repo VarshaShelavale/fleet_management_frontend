@@ -7,7 +7,7 @@ function Navbar() {
       <nav>
         <ul>
           <li>
-            <NavLink to="/reservation">Home</NavLink>
+            <NavLink to="/">Home</NavLink>
           </li>
           <li>
             <NavLink to="/memberresister">Member Registration</NavLink>

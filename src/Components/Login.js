@@ -69,12 +69,12 @@ function Login() {
             Login as User
           </button>
         </div>
-        {state == "formfill" && (
+        {state === "formfill" && (
           <p>
-            You don't have account ? <Link to="/memberresister">Register</Link>
+            You don't have account ? <Link to="/userReg">Register</Link>
           </p>
         )}
-        {state != "formfill" && (
+        {state !== "formfill" && (
           <div className="login-options">
             <button type="submit" onClick={adminsubmit}>
               Login as Admin

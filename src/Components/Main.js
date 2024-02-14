@@ -10,6 +10,8 @@ import HubSelect from "./HubSelect";
 import CarCategory from "./CarCategory";
 import AddOnpage from "./AddOnpage";
 import Booking from "./Booking";
+import PickUpHub from "./PickUpHub";
+import UserReg from "./UserReg";
 function Main() {
   return (
     <div>
@@ -26,7 +28,7 @@ function Main() {
               element={<CancelBooking></CancelBooking>}
             ></Route>
             <Route
-              path="/reservation"
+              path="/"
               element={<ReservationForm></ReservationForm>}
             ></Route>
             <Route
@@ -34,9 +36,10 @@ function Main() {
               element={<CarCategory></CarCategory>}
             ></Route>
             <Route path="/hubs/:id" element={<HubSelect></HubSelect>}></Route>
-            <Route path="/pickuphubs" element={<HubSelect></HubSelect>}></Route>
+            <Route path="/pickuphubs" element={<PickUpHub></PickUpHub>}></Route>
             <Route path="/addon" element={<AddOnpage></AddOnpage>}></Route>
             <Route path="/booking" element={<Booking></Booking>}></Route>
+            <Route path="/userReg" element={<UserReg></UserReg>}></Route>
             <Route
               path="/memberresister"
               element={<MemberRegisterForm></MemberRegisterForm>}

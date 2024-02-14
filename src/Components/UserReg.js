@@ -1,8 +1,6 @@
 import { useState } from "react";
 import "./MemberReg.css";
-import { useNavigate } from "react-router-dom";
-function MemberRegisterForm() {
-  const navigate = useNavigate();
+function UserReg() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -39,7 +37,6 @@ function MemberRegisterForm() {
       })
       .then((data) => {
         console.log("Success:", data);
-        navigate("/");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -133,4 +130,4 @@ function MemberRegisterForm() {
   );
 }
 
-export default MemberRegisterForm;
+export default UserReg;

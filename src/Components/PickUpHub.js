@@ -1,68 +1,51 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./HubSelect.css";
 
 function HubSelect() {
-  const { id } = useParams();
-  const location = useLocation();
-  const state = location.state;
   const [hubs, setHubs] = useState([]);
-  const [selectedHub, setSelectedHub] = useState("");
+  const [selectedHub, setSelectedHub] = useState(0);
   const navigate = useNavigate();
+
   useEffect((e) => {
-    if (state === "airportid") {
-      fetch("http://localhost:8080/api/hub/" + id)
+    if (sessionStorage.getItem("pickupcityid")) {
+      fetch(
+        "http://localhost:8080/api/hubs/" +
+          sessionStorage.getItem("pickupcityid")
+      )
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           setHubs(data);
         });
     }
   }, []);
   useEffect((e) => {
-    if (state === "cityid") {
-      fetch("http://localhost:8080/api/hubs/" + id)
+    if (sessionStorage.getItem("pickupairid")) {
+      fetch(
+        "http://localhost:8080/api/hub/" + sessionStorage.getItem("pickupairid")
+      )
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           setHubs(data);
         });
     }
   }, []);
-  // useEffect((e) => {
-  //   if (state == null && sessionStorage.getItem("pickupcityid")) {
-  //     fetch(
-  //       "http://localhost:8080/api/hubs/" +
-  //         sessionStorage.getItem("pickupcityid")
-  //     )
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         setHubs(data);
-  //       });
-  //   }
-  // }, []);
-  // useEffect((e) => {
-  //   if (state == null && sessionStorage.getItem("pickupairid")) {
-  //     fetch(
-  //       "http://localhost:8080/api/hub/" + sessionStorage.getItem("pickupairid")
-  //     )
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         setHubs(data);
-  //       });
-  //   }
-  // }, []);
   const handleHubSelection = (event) => {
+    console.log(event.target.value);
     setSelectedHub(event.target.value);
   };
   const submitForm = (e) => {
     e.preventDefault();
 
-    navigate("/pickuphubs");
+    navigate("/carcategory/" + selectedHub);
   };
   return (
     <div className="hubSelectContainer">
       <form className="hubForm" onSubmit={submitForm}>
         <p>
-          Please select your <strong>return </strong>location..
+          Please select your <strong>Pickup </strong>location..
         </p>
 
         {hubs.map((hub) => (

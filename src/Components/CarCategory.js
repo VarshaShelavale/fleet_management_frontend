@@ -17,6 +17,7 @@ function CarCategory() {
   }, [id]);
   const handleSelect = (e) => {
     sessionStorage.setItem("selectedcartype", JSON.stringify(e));
+    console.log(e);
     navigate("/addon");
   };
   return carcategory.map((car) => (
@@ -67,7 +68,12 @@ function CarCategory() {
           <td>{car.cartype_Master.weekly_Rate}</td>
           <td>{car.cartype_Master.month_Rate}</td>
           <td>
-            <MDBBtn color="link" rounded size="sm" onClick={handleSelect(car)}>
+            <MDBBtn
+              color="link"
+              rounded
+              size="sm"
+              onClick={() => handleSelect(car)}
+            >
               Select
             </MDBBtn>
           </td>
