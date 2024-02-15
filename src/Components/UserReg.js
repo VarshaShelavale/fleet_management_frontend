@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./MemberReg.css";
 function UserReg() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -10,6 +12,7 @@ function UserReg() {
     dlNumber: "",
     passportNo: "",
     adhaarNumber: "",
+    city: "",
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,6 +40,8 @@ function UserReg() {
       })
       .then((data) => {
         console.log("Success:", data);
+        sessionStorage.setItem("userinfo", JSON.stringify(data));
+        navigate("/booking");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -92,8 +97,17 @@ function UserReg() {
           name="password"
           value={formData.password}
         />
-
         <br />
+        <label>City</label>
+        <input
+          type="text"
+          placeholder="City"
+          onChange={handleChange}
+          name="city"
+          value={formData.city}
+        />
+        <br />
+
         <label>Local Driving Lic</label>
         <input
           type="text"
@@ -124,7 +138,7 @@ function UserReg() {
           name="aadharNo"
           value={formData.aadharNo}
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Continue Booking</button>
       </form>
     </div>
   );

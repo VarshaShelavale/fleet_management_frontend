@@ -12,6 +12,7 @@ function MemberRegisterForm() {
     dlNumber: "",
     passportNo: "",
     adhaarNumber: "",
+    city: "",
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,6 +40,7 @@ function MemberRegisterForm() {
       })
       .then((data) => {
         console.log("Success:", data);
+        sessionStorage.setItem("userinfo", JSON.stringify(data));
         navigate("/");
       })
       .catch((error) => {
@@ -96,6 +98,15 @@ function MemberRegisterForm() {
           value={formData.password}
         />
 
+        <br />
+        <label>City</label>
+        <input
+          type="text"
+          placeholder="City"
+          onChange={handleChange}
+          name="city"
+          value={formData.city}
+        />
         <br />
         <label>Local Driving Lic</label>
         <input

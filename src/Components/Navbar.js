@@ -24,6 +24,12 @@ function Navbar() {
           <li className="login-button">
             <NavLink to="/login">Login</NavLink>
           </li>
+          <li>
+            <NavLink to="/cutomercare">Customer care </NavLink>
+          </li>
+          <li className="login-button">
+            <NavLink to="/login">Login</NavLink>
+          </li>
         </ul>
       </nav>
     </div>

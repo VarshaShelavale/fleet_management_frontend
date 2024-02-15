@@ -3,11 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { MDBBtn, MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
 
 import "./CarCategorymodule.css";
+import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
 
 function CarCategory() {
   const { id } = useParams();
   const [carcategory, setCarCategory] = useState([]);
   // Add state to track hover status
+  const { setCartype } = useSelectedOptions();
   const [hoveredCarId, setHoveredCarId] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
@@ -16,8 +18,9 @@ function CarCategory() {
       .then((data) => setCarCategory(data));
   }, [id]);
   const handleSelect = (e) => {
-    sessionStorage.setItem("selectedcartype", JSON.stringify(e));
-    console.log(e);
+    // sessionStorage.setItem("selectedcartype", JSON.stringify(e));
+    //console.log(e);
+    setCartype(e);
     navigate("/addon");
   };
   return carcategory.map((car) => (

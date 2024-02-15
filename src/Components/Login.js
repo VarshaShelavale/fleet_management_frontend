@@ -24,7 +24,7 @@ function Login() {
 
       if (state === "formfill") {
         navigate("/booking");
-      } else navigate("/reservation");
+      } else navigate("/");
     } catch (error) {
       console.error("Error fetching data:", error);
     }

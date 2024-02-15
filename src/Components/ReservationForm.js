@@ -1,26 +1,28 @@
 import { useEffect, useState } from "react";
 import "./Reservation.Module.css";
 import { useNavigate } from "react-router-dom";
+import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
 function ReservationForm() {
+  const { setpairport } = useSelectedOptions();
+  const { pickupDate, setPickupDate } = useSelectedOptions();
+  const { returnDate, setReturnDate } = useSelectedOptions("");
+  const { pickupCity, setPickupCity } = useSelectedOptions(0);
   const [selectedOption, setSelectedOption] = useState(true);
   const [selectedOption2, setSelectedOption2] = useState(true);
-  const [pairportid, setpairport] = useState(0);
   const [rairportid, setrairport] = useState(0);
   const [states, setState] = useState([]);
   const [pcities, setpCities] = useState([]);
   const [rcities, setrCities] = useState([]);
   const [airports, setairports] = useState([]);
-  const [pickupDate, setPickupDate] = useState("");
-  const [returnDate, setReturnDate] = useState("");
   const [airportCodepickUp, setAirportCodePickUp] = useState("");
-  const [pickupCity, setPickupCity] = useState(0);
-  const [returnCity, setReturnCity] = useState();
+  const [returnCity, setReturnCity] = useState(0);
   const [airportCodereturn, setAirportCodeReturn] = useState("");
   const [pickUpState, setPickUpState] = useState(0);
   const [returnState, setReturnState] = useState(0);
   const [rstate, setrState] = useState("");
   const [pstate, setpState] = useState("");
   const navigate = useNavigate();
+  const today = new Date().toISOString().split("T")[0];
   useEffect(function () {}, []);
   function handleSubmit(e) {
     e.preventDefault();
@@ -34,10 +36,11 @@ function ReservationForm() {
       pickUpState: pstate,
       returnState: rstate,
     };
-    sessionStorage.setItem("pickUpdate", pickupDate);
-    sessionStorage.setItem("returndata", returnDate);
-    sessionStorage.setItem("pickupcityid", pickupCity);
-    sessionStorage.setItem("pickupairid", pairportid);
+    // sessionStorage.setItem("pickUpdate", pickupDate);
+    // sessionStorage.setItem("returndate", returnDate);
+    // sessionStorage.setItem("pickupcityid", pickupCity);
+    // sessionStorage.setItem("pickupairid", pairportid);
+
     console.log(data);
     if (rairportid) {
       navigate("/hubs/" + rairportid, { state: "airportid" });
@@ -123,6 +126,7 @@ function ReservationForm() {
                   name="pickupDate"
                   value={pickupDate}
                   required
+                  min={today}
                   onChange={(e) => setPickupDate(e.target.value)}
                 />
               </div>
@@ -134,6 +138,7 @@ function ReservationForm() {
                   name="returnDate"
                   value={returnDate}
                   required
+                  min={today}
                   onChange={(e) => setReturnDate(e.target.value)}
                 />
               </div>

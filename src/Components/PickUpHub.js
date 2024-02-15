@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./HubSelect.css";
+import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
 
 function HubSelect() {
   const [hubs, setHubs] = useState([]);
   const [selectedHub, setSelectedHub] = useState(0);
+  const { setSelectedpickHub } = useSelectedOptions();
   const navigate = useNavigate();
-
+  const { pickupCity } = useSelectedOptions();
+  const { pairportid } = useSelectedOptions();
   useEffect((e) => {
-    if (sessionStorage.getItem("pickupcityid")) {
-      fetch(
-        "http://localhost:8080/api/hubs/" +
-          sessionStorage.getItem("pickupcityid")
-      )
+    if (pickupCity) {
+      fetch("http://localhost:8080/api/hubs/" + pickupCity)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -20,11 +20,13 @@ function HubSelect() {
         });
     }
   }, []);
+  useEffect(() => {
+    const hub = hubs.filter((e) => e.hub_id == selectedHub);
+    setSelectedpickHub(hub);
+  }, [selectedHub]);
   useEffect((e) => {
-    if (sessionStorage.getItem("pickupairid")) {
-      fetch(
-        "http://localhost:8080/api/hub/" + sessionStorage.getItem("pickupairid")
-      )
+    if (pairportid) {
+      fetch("http://localhost:8080/api/hub/" + pairportid)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -38,7 +40,7 @@ function HubSelect() {
   };
   const submitForm = (e) => {
     e.preventDefault();
-
+    // sessionStorage.setItem("pickhubId", selectedHub);
     navigate("/carcategory/" + selectedHub);
   };
   return (

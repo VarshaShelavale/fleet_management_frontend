@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Addon.css";
+import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
 
 const AddOnpage = () => {
   const navigate = useNavigate();
 
-  const [total_amt, settotal_amt] = useState(0);
+  const { total_amt, settotal_amt } = useSelectedOptions();
   const [adonlist, setaddonlist] = useState([]);
 
   const handleCheckboxChange = (e) => {
@@ -19,7 +20,7 @@ const AddOnpage = () => {
   const handleContinueClick = () => {
     // Store selected values in session storage
     console.log(total_amt);
-    sessionStorage.setItem("addonamt", total_amt);
+    // sessionStorage.setItem("addonamt", total_amt);
     // Perform any additional actions or navigation here
     if (sessionStorage.getItem("userinfo")) {
       navigate("/booking");
