@@ -1,8 +1,10 @@
 import { useState } from "react";
 import "./MemberReg.css";
 import { useNavigate } from "react-router-dom";
+import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
 function MemberRegisterForm() {
   const navigate = useNavigate();
+  const { login } = useSelectedOptions();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -40,7 +42,7 @@ function MemberRegisterForm() {
       })
       .then((data) => {
         console.log("Success:", data);
-        sessionStorage.setItem("userinfo", JSON.stringify(data));
+        login(data);
         navigate("/");
       })
       .catch((error) => {

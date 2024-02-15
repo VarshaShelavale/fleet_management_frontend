@@ -10,6 +10,18 @@ export function SelectedOptionsProvider({ children }) {
   const [pairportid, setpairport] = useState(0);
   const [cartype, setCartype] = useState([]);
   const [total_amt, settotal_amt] = useState(0);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const login = (userData) => {
+    sessionStorage.setItem("isAuthenticated", "true");
+    sessionStorage.setItem("userinfo", JSON.stringify(userData));
+    setIsAuthenticated(true);
+  };
+
+  const logout = () => {
+    sessionStorage.removeItem("isAuthenticated");
+    sessionStorage.removeItem("userinfo");
+    setIsAuthenticated(false);
+  };
   return (
     <SelectedOptionsContext.Provider
       value={{
@@ -29,6 +41,9 @@ export function SelectedOptionsProvider({ children }) {
         setCartype,
         total_amt,
         settotal_amt,
+        isAuthenticated,
+        login,
+        logout,
       }}
     >
       {children}

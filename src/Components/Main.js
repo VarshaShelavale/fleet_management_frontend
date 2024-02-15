@@ -12,6 +12,8 @@ import AddOnpage from "./AddOnpage";
 import Booking from "./Booking";
 import PickUpHub from "./PickUpHub";
 import UserReg from "./UserReg";
+import Handover from "./Handover";
+import Return from "./Return";
 function Main() {
   return (
     <div>
@@ -40,6 +42,8 @@ function Main() {
             <Route path="/addon" element={<AddOnpage></AddOnpage>}></Route>
             <Route path="/booking" element={<Booking></Booking>}></Route>
             <Route path="/userReg" element={<UserReg></UserReg>}></Route>
+            <Route path="/return" element={<Handover></Handover>}></Route>
+            <Route path="/handover" element={<Return></Return>}></Route>
             <Route
               path="/memberresister"
               element={<MemberRegisterForm></MemberRegisterForm>}

@@ -1,6 +1,7 @@
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import "./Login.css";
 import React, { useState } from "react";
+import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
 
 function Login() {
   const location = useLocation();
@@ -8,9 +9,13 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const { login } = useSelectedOptions();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
+      setError("Please enter both email and password.");
+
       return;
     }
 
@@ -19,14 +24,14 @@ function Login() {
         `http://localhost:8080/api/register/${email}/${password}`
       );
       const result = await response.json();
-      sessionStorage.setItem("userinfo", JSON.stringify(result));
+      login(result);
       console.log(result);
 
       if (state === "formfill") {
         navigate("/booking");
       } else navigate("/");
     } catch (error) {
-      console.error("Error fetching data:", error);
+      setError("Please enter  valid credentials...");
     }
   };
   const adminsubmit = (e) => {
@@ -64,6 +69,8 @@ function Login() {
             }}
           />
         </div>
+        {error && <div className="error-message">{error}</div>}
+
         <div className="login-options">
           <button type="submit" onClick={handleSubmit}>
             Login as User
