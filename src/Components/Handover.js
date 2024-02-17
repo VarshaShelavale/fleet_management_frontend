@@ -8,6 +8,8 @@ import {
   MDBTableHead,
 } from "mdb-react-ui-kit";
 
+import { useNavigate } from "react-router-dom";
+
 function Handover() {
   const [email, setEmail] = useState("");
   const [booking, setBooking] = useState([]);
@@ -16,6 +18,7 @@ function Handover() {
   const [cartypeName, setCartypeName] = useState(null);
   const [cars, setCars] = useState(null);
   const [selectcar, setSelectedcar] = useState(true);
+  const navigate = useNavigate();
   useEffect(() => {
     function fetchinfo() {
       if (email) {
@@ -58,8 +61,10 @@ function Handover() {
         .catch((err) => console.log(err));
     }
   }
+
   function setChange(id) {
     setSelectedcar((e) => !e);
+
     fetch(`http://localhost:8080/${id}/availability?isAvailable=false`, {
       method: "PUT",
     })
@@ -190,7 +195,7 @@ function Handover() {
         style={{ display: "flex", alignItems: "center", margin: "20px" }}
         onClick={() => {
           alert("Handover Successfull.. ");
-          window.print();
+          navigate("/");
         }}
         disabled={selectcar}
       >

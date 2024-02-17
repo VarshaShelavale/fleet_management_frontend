@@ -11,6 +11,8 @@ export function SelectedOptionsProvider({ children }) {
   const [cartype, setCartype] = useState([]);
   const [total_amt, settotal_amt] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isadminAuthenticated, setIsadminAuthenticated] = useState(false);
+
   const login = (userData) => {
     sessionStorage.setItem("isAuthenticated", "true");
     sessionStorage.setItem("userinfo", JSON.stringify(userData));
@@ -21,7 +23,15 @@ export function SelectedOptionsProvider({ children }) {
     sessionStorage.removeItem("isAuthenticated");
     sessionStorage.removeItem("userinfo");
     setIsAuthenticated(false);
+    setIsadminAuthenticated(false);
+    sessionStorage.removeItem("admininfo");
   };
+  const adminlogin = (userdata) => {
+    // sessionStorage.setItem("isAuthenticated", "true");
+    sessionStorage.setItem("admininfo", JSON.stringify(userdata));
+    setIsadminAuthenticated(true);
+  };
+
   return (
     <SelectedOptionsContext.Provider
       value={{
@@ -44,6 +54,8 @@ export function SelectedOptionsProvider({ children }) {
         isAuthenticated,
         login,
         logout,
+        adminlogin,
+        isadminAuthenticated,
       }}
     >
       {children}

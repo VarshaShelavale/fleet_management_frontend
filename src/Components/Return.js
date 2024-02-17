@@ -7,7 +7,6 @@ import {
   MDBInput,
   MDBTableHead,
   MDBRadio,
-  MDBBtnGroup,
 } from "mdb-react-ui-kit";
 
 function Return() {
@@ -18,6 +17,7 @@ function Return() {
   const [cartypeName, setCartypeName] = useState(null);
   const [estamt, setestamt] = useState(0);
   const [fuelstatus, setfuelstatus] = useState("");
+
   useEffect(() => {
     function fetchinfo() {
       if (email) {
@@ -58,7 +58,7 @@ function Return() {
     }
   }
   function generateInvoice() {
-    const admininfo = JSON.parse(sessionStorage.getItem("userinfo"));
+    const admininfo = JSON.parse(sessionStorage.getItem("admininfo"));
     console.log(admininfo.Name);
     const invoice = {
       billingid: book.bookingId,
@@ -80,12 +80,41 @@ function Return() {
     })
       .then(() => {
         console.log("Success:");
+        setChange();
+        deleteBooking(book.bookingId);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   }
+  function deleteBooking(e) {
+    if (e) {
+      fetch(`http://localhost:8080/api/delete/${e}`, {
+        method: "DELETE",
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          // Optionally, handle successful response
+          console.log("Item deleted successfully");
+        })
+        .catch((err) => {
+          console.error("There was a problem with your fetch operation:", err);
+        });
+    }
+  }
+  function setChange() {
+    fetch(
+      `http://localhost:8080/${book.car_id}/availability?isAvailable=true`,
+      {
+        method: "PUT",
+      }
+    )
+      .then(console.log("successful"))
 
+      .catch((err) => console.log(err));
+  }
   return (
     <div>
       <div style={{ display: "flex", alignItems: "center", margin: "20px" }}>

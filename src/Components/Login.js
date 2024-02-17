@@ -10,7 +10,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const { login } = useSelectedOptions();
+  const { login, adminlogin } = useSelectedOptions();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
@@ -45,8 +45,10 @@ function Login() {
         password,
         Name: "fleeman admin",
       };
-      login(admin);
-      navigate("/return");
+      adminlogin(admin);
+      navigate("/");
+    } else {
+      setError("Please enter  valid credentials...");
     }
   };
   return (

@@ -9,7 +9,7 @@ const AddOnpage = () => {
   const { total_amt, settotal_amt } = useSelectedOptions();
   const [adonlist, setaddonlist] = useState([]);
 
-  const { isAuthenticated } = useSelectedOptions();
+  const { isAuthenticated, isadminAuthenticated } = useSelectedOptions();
   const handleCheckboxChange = (e) => {
     settotal_amt((amt) => amt + e);
   };
@@ -25,8 +25,10 @@ const AddOnpage = () => {
     // Perform any additional actions or navigation here
     if (isAuthenticated) {
       navigate("/booking");
+    } else if (isadminAuthenticated) {
+      navigate("/userReg");
     } else {
-      navigate("login", { state: "formfill" });
+      navigate("/login", { state: "formfill" });
     }
   };
 

@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
 import "./Navbar.Module.css";
 import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
-import { MDBBtn } from "mdb-react-ui-kit";
+
 function Navbar() {
-  const { isAuthenticated, logout } = useSelectedOptions();
+  const { isAuthenticated, logout, isadminAuthenticated } =
+    useSelectedOptions();
   return (
     <div>
       <nav>
@@ -26,7 +27,7 @@ function Navbar() {
           <li>
             <NavLink to="/cutomercare">Customer care </NavLink>
           </li>
-          {!isAuthenticated ? (
+          {!isadminAuthenticated && !isAuthenticated ? (
             <li className="login-button">
               <NavLink to="/login">Login</NavLink>
             </li>
@@ -35,13 +36,16 @@ function Navbar() {
               <NavLink to="/">Logout</NavLink>
             </li>
           )}
-
-          <li className="login-button">
-            <NavLink to="/return">Return</NavLink>
-          </li>
-          <li className="login-button">
-            <NavLink to="/handover">Handover</NavLink>
-          </li>
+          {isadminAuthenticated && (
+            <>
+              <li className="login-button">
+                <NavLink to="/return">Return</NavLink>
+              </li>
+              <li className="login-button">
+                <NavLink to="/handover">Handover</NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </div>
