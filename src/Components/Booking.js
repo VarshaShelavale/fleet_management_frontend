@@ -31,19 +31,15 @@ function Booking() {
     const numDays = calculateDays(pickupDate, returnDate);
     console.log("Number of days:", numDays);
     if (numDays > 30) {
-      const amtmonth =
-        (numDays / 30) * Number(cartype.cartype_Master.month_Rate);
-      const amtremain =
-        (numDays % 30) * Number(cartype.cartype_Master.daily_Rate);
+      const amtmonth = (numDays / 30) * Number(cartype.month_Rate);
+      const amtremain = (numDays % 30) * Number(cartype.daily_Rate);
       return amtmonth + amtremain;
     } else if (numDays > 7) {
-      const amtmonth =
-        (numDays / 30) * Number(cartype.cartype_Master.weekly_Rate);
-      const amtremain =
-        (numDays % 30) * Number(cartype.cartype_Master.daily_Rate);
+      const amtmonth = (numDays / 30) * Number(cartype.weekly_Rate);
+      const amtremain = (numDays % 30) * Number(cartype.daily_Rate);
       return amtmonth + amtremain;
     } else {
-      const amt = (numDays % 30) * Number(cartype.cartype_Master.daily_Rate);
+      const amt = (numDays % 30) * Number(cartype.daily_Rate);
       return amt;
     }
   }
@@ -55,12 +51,12 @@ function Booking() {
   function handleSubmit(e) {
     e.preventDefault();
     const booking = {
-      car_id: cartype.car_id,
-      cust_id: user.regId,
+      car_id: cartype.cartype_id,
       end_date: returnDate,
       start_date: pickupDate,
       hub_id: selecteddropHub[0].hub_id,
       estamount: estamt,
+      regId: user.regId,
     };
     console.log(JSON.stringify(booking));
     fetch("http://localhost:8080/api/bookingsave", {
@@ -73,7 +69,7 @@ function Booking() {
       .then(() => {
         // console.log("Success:", data);
         alert("Booking Successful");
-        navigate("/");
+        navigate("/cancelbooking");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -142,6 +138,13 @@ function Booking() {
       </div>
       <button type="submit" onClick={handleSubmit}>
         Submit
+      </button>
+      <button
+        onClick={() => {
+          navigate("/cancelbooking");
+        }}
+      >
+        Cancel
       </button>
     </form>
   );

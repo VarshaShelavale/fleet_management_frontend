@@ -40,7 +40,13 @@ function Login() {
       return;
     }
     if (email === "a@gmail.com" && password === "a@123") {
-      console.log("login succesfull");
+      const admin = {
+        email,
+        password,
+        Name: "fleeman admin",
+      };
+      login(admin);
+      navigate("/return");
     }
   };
   return (
@@ -83,7 +89,7 @@ function Login() {
         )}
         {state !== "formfill" && (
           <div className="login-options">
-            <button type="submit" onClick={adminsubmit}>
+            <button type="submit" onClick={(e) => adminsubmit(e)}>
               Login as Admin
             </button>
           </div>

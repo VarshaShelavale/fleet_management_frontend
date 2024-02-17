@@ -9,6 +9,7 @@ const AddOnpage = () => {
   const { total_amt, settotal_amt } = useSelectedOptions();
   const [adonlist, setaddonlist] = useState([]);
 
+  const { isAuthenticated } = useSelectedOptions();
   const handleCheckboxChange = (e) => {
     settotal_amt((amt) => amt + e);
   };
@@ -22,10 +23,10 @@ const AddOnpage = () => {
     console.log(total_amt);
     // sessionStorage.setItem("addonamt", total_amt);
     // Perform any additional actions or navigation here
-    if (sessionStorage.getItem("userinfo")) {
+    if (isAuthenticated) {
       navigate("/booking");
     } else {
-      navigate("/login", { state: "formfill" });
+      navigate("login", { state: "formfill" });
     }
   };
 

@@ -43,11 +43,11 @@ function ReservationForm() {
 
     console.log(data);
     if (rairportid) {
-      navigate("/hubs/" + rairportid, { state: "airportid" });
+      navigate("hubs/" + rairportid, { state: "airportid" });
     }
 
     if (returnCity) {
-      navigate("/hubs/" + returnCity, { state: "cityid" });
+      navigate("hubs/" + returnCity, { state: "cityid" });
     }
   }
 

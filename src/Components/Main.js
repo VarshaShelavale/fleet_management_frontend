@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Home";
 import About from "./About";
 import Customercare from "./Customercare";
@@ -14,6 +14,18 @@ import PickUpHub from "./PickUpHub";
 import UserReg from "./UserReg";
 import Handover from "./Handover";
 import Return from "./Return";
+
+import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
+function ProtectedRoute({ element, ...rest }) {
+  const { isAuthenticated } = useSelectedOptions();
+  if (!isAuthenticated) {
+    // If user is not authenticated, redirect to login page
+    return <Navigate to="/login" />;
+  }
+
+  // If user is authenticated, render the requested route
+  return <Route {...rest} element={element} />;
+}
 function Main() {
   return (
     <div>
@@ -42,8 +54,8 @@ function Main() {
             <Route path="/addon" element={<AddOnpage></AddOnpage>}></Route>
             <Route path="/booking" element={<Booking></Booking>}></Route>
             <Route path="/userReg" element={<UserReg></UserReg>}></Route>
-            <Route path="/return" element={<Handover></Handover>}></Route>
-            <Route path="/handover" element={<Return></Return>}></Route>
+            <Route path="/handover" element={<Handover></Handover>}></Route>
+            <Route path="/return" element={<Return></Return>}></Route>
             <Route
               path="/memberresister"
               element={<MemberRegisterForm></MemberRegisterForm>}
