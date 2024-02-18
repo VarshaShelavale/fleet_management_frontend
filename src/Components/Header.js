@@ -4,10 +4,11 @@ function Header() {
   return (
     <header>
       <img
-        src="./inDrive-Logo-1.jpg"
+        src="./logonew.jpg"
         width="100"
-        height="10"
+        height="20"
         alt="inDrive Logo"
+        style={{ borderRadius: "30px" }}
       />
 
       <h5>Book Online or Call 1-800-DRIVE</h5>

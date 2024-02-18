@@ -8,6 +8,8 @@ import {
   MDBTableHead,
   MDBRadio,
 } from "mdb-react-ui-kit";
+import { useNavigate } from "react-router-dom";
+import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
 
 function Return() {
   const [email, setEmail] = useState("");
@@ -17,6 +19,8 @@ function Return() {
   const [cartypeName, setCartypeName] = useState(null);
   const [estamt, setestamt] = useState(0);
   const [fuelstatus, setfuelstatus] = useState("");
+  const { invoiceid, setinvoiceid } = useSelectedOptions();
+  const navigate = useNavigate();
 
   useEffect(() => {
     function fetchinfo() {
@@ -26,7 +30,6 @@ function Return() {
           .then((data) => {
             setBooking(data.booking);
             setCustomer(data);
-            console.log(data);
           })
           .catch((err) => console.log(err));
       }
@@ -34,8 +37,6 @@ function Return() {
     fetchinfo();
   }, [email]);
   function getDetails(id) {
-    console.log(id.hub_id);
-    console.log(id.estamount);
     setestamt(id.estamount);
     setBook(id);
     function fetchinfo() {
@@ -56,10 +57,12 @@ function Return() {
     } else if (fuelstatus === "empty") {
       setestamt((e) => e + 4500);
     }
+    console.log(book);
   }
   function generateInvoice() {
     const admininfo = JSON.parse(sessionStorage.getItem("admininfo"));
     console.log(admininfo.Name);
+
     const invoice = {
       billingid: book.bookingId,
       adminname: admininfo.Name,
@@ -71,6 +74,7 @@ function Return() {
       category: cartypeName,
     };
     console.log(invoice);
+    setinvoiceid(invoice.billingid);
     fetch("http://localhost:8080/api/generatepdf", {
       method: "POST",
       headers: {
@@ -80,8 +84,14 @@ function Return() {
     })
       .then(() => {
         console.log("Success:");
+
         setChange();
         deleteBooking(book.bookingId);
+        changehub();
+        console.log(book);
+        console.log(book.bookingId);
+        console.log(invoiceid);
+        navigate("/invoice", { state: invoice });
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -104,9 +114,21 @@ function Return() {
         });
     }
   }
+
   function setChange() {
     fetch(
       `http://localhost:8080/${book.car_id}/availability?isAvailable=true`,
+      {
+        method: "PUT",
+      }
+    )
+      .then(console.log("successful"))
+
+      .catch((err) => console.log(err));
+  }
+  function changehub() {
+    fetch(
+      `http://localhost:8080/api/${book.carcarid}/hubId?hubId=${book.drophub_id}`,
       {
         method: "PUT",
       }

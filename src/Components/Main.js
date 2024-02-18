@@ -16,6 +16,7 @@ import Handover from "./Handover";
 import Return from "./Return";
 
 import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
+import Invoice from "./Invoice";
 function ProtectedRoute({ element, ...rest }) {
   const { isAuthenticated } = useSelectedOptions();
   if (!isAuthenticated) {
@@ -56,6 +57,7 @@ function Main() {
             <Route path="/userReg" element={<UserReg></UserReg>}></Route>
             <Route path="/handover" element={<Handover></Handover>}></Route>
             <Route path="/return" element={<Return></Return>}></Route>
+            <Route path="/invoice" element={<Invoice></Invoice>}></Route>
             <Route
               path="/memberresister"
               element={<MemberRegisterForm></MemberRegisterForm>}

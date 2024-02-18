@@ -12,7 +12,7 @@ export function SelectedOptionsProvider({ children }) {
   const [total_amt, settotal_amt] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isadminAuthenticated, setIsadminAuthenticated] = useState(false);
-
+  const [invoiceid, setinvoiceid] = useState();
   const login = (userData) => {
     sessionStorage.setItem("isAuthenticated", "true");
     sessionStorage.setItem("userinfo", JSON.stringify(userData));
@@ -56,6 +56,8 @@ export function SelectedOptionsProvider({ children }) {
         logout,
         adminlogin,
         isadminAuthenticated,
+        invoiceid,
+        setinvoiceid,
       }}
     >
       {children}

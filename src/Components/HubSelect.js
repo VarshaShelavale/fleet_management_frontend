@@ -27,6 +27,7 @@ function HubSelect() {
         .then((res) => res.json())
         .then((data) => {
           setHubs(data);
+          console.log(data);
         });
     }
   }, []);

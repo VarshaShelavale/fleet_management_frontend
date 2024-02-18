@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
 import { useNavigate } from "react-router-dom";
-import "./Booking.module.css";
+
 import { blue } from "@mui/material/colors";
 
 function Booking() {
@@ -13,6 +13,8 @@ function Booking() {
     pickupDate,
     returnDate,
   } = useSelectedOptions();
+  console.log(selecteddropHub);
+  console.log(selecteddropHub);
   const navigate = useNavigate();
   const [estamt, setEstamt] = useState();
   const user = JSON.parse(sessionStorage.getItem("userinfo"));
@@ -55,9 +57,10 @@ function Booking() {
       car_id: cartype.cartype_id,
       end_date: returnDate,
       start_date: pickupDate,
-      hub_id: selecteddropHub[0].hub_id,
+      drophub_id: selecteddropHub[0].hub_id,
       estamount: estamt,
       regId: user.regId,
+      pickuphub_id: selectedpickHub[0].hub_id,
     };
     console.log(JSON.stringify(booking));
     fetch("http://localhost:8080/api/bookingsave", {
@@ -84,14 +87,16 @@ function Booking() {
         justifyContent: "center",
         alignItems: "center",
         width: "500px" /* Adjust the width as needed */,
-        height: "650px" /* Adjust the height as needed */,
+        height: "750px" /* Adjust the height as needed */,
         textAlign: "left",
         border: "2px solid #2e3437",
         marginLeft: "500px",
       }}
     >
-      <form className="bookingform">
-        <h2>Booking Form</h2>
+      <form style={{ padding: "30px" }}>
+        <div style={{ textAlign: "center" }}>
+          <h2>Booking Form</h2>
+        </div>
         <div>
           <label>Start Date: {pickupDate} </label>
         </div>
@@ -140,16 +145,18 @@ function Booking() {
         <div>
           <label>Estimated Amount: {estamt} </label>
         </div>
-        <button type="submit" onClick={handleSubmit} style={{ margin: 10 }}>
-          Submit
-        </button>
-        <button
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          Cancel
-        </button>
+        <div style={{ textAlign: "center" }}>
+          <button type="submit" onClick={handleSubmit} style={{ margin: 10 }}>
+            Submit
+          </button>
+          <button
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );

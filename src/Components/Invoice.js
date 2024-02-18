@@ -1,125 +1,123 @@
-// function Invoice() {
-//   return (
-//     <div>
-//       <MDBCard className="p-4">
-//         <MDBCardBody>
-//           <MDBContainer className="mb-2 mt-3">
-//             <MDBRow className="d-flex align-items-baseline">
-//               <MDBCol xl="9">
-//                 <p style={{ color: "#7e8d9f", fontSize: "20px" }}>
-//                   Invoice &gt; &gt;{" "}
-//                   <strong>ID: #{billingRecords.billingId}</strong>
-//                 </p>
-//               </MDBCol>
-//               <MDBCol xl="3" className="float-end"></MDBCol>
-//             </MDBRow>
-//           </MDBContainer>
-//           <MDBContainer>
-//             <MDBCol md="12" className="text-center">
-//               <MDBIcon
-//                 fab
-//                 icon="mdb"
-//                 size="4x"
-//                 className="ms-0 "
-//                 style={{ color: "#5d9fc5" }}
-//               />
-//               <p className="pt-0">India Drive</p>
-//             </MDBCol>
-//           </MDBContainer>
-//           <MDBRow>
-//             <MDBCol xl="8">
-//               <MDBTypography listUnStyled>
-//                 <li className="text-muted">
-//                   To: <span style={{ color: "#5d9fc5" }}>saffafs</span>
-//                 </li>
-//                 <li className="text-muted">asdfaf</li>
-//                 <li className="text-muted">afdsaf</li>
-//                 <li className="text-muted">
-//                   <MDBIcon fas icon="phone-alt" />
-//                   adsadsda
-//                 </li>
-//               </MDBTypography>
-//             </MDBCol>
-//             <MDBCol xl="4">
-//               <p className="text-muted">Invoice</p>
-//               <MDBTypography listUnStyled>
-//                 <li className="text-muted">
-//                   <MDBIcon fas icon="circle" style={{ color: "#84B0CA" }} />
-//                   <span className="fw-bold ms-1">ID:</span># asdsgfdg
-//                 </li>
-//                 <li className="text-muted">
-//                   <MDBIcon fas icon="circle" style={{ color: "#84B0CA" }} />
-//                   <span className="fw-bold ms-1">Creation Date: </span>
-//                   safgfdgbd
-//                 </li>
-//                 <li className="text-muted">
-//                   <MDBIcon fas icon="circle" style={{ color: "#84B0CA" }} />
-//                   <span className="fw-bold ms-1">Staff Name:</span>
-//                   <span className="badge bg-warning text-black fw-bold ms-1">
-//                     sdfvb
-//                   </span>
-//                 </li>
-//               </MDBTypography>
-//             </MDBCol>
-//           </MDBRow>
-//           <MDBRow className="my-2 mx-1 justify-content-center">
-//             <MDBTable striped borderless>
-//               <MDBTableHead
-//                 className="text-white"
-//                 style={{ backgroundColor: "#84B0CA" }}
-//               >
-//                 <tr>
-//                   <th scope="col">#</th>
-//                   <th scope="col">Customer name</th>
-//                   <th scope="col">Final fuel status</th>
-//                   <th scope="col">User email id</th>
-//                   <th scope="col">Amount</th>
-//                 </tr>
-//               </MDBTableHead>
-//               <MDBTableBody>
-//                 <tr>
-//                   <th scope="row">1</th>
-//                   <td> {billingRecords.userName}</td>
-//                   <td>{billingRecords.fuelStatus}</td>
-//                   <td>{billingRecords.userEmailId}</td>
-//                   <td>{billingRecords.billAmount}</td>
-//                 </tr>
-//               </MDBTableBody>
-//             </MDBTable>
-//           </MDBRow>
-//           <MDBRow>
-//             <MDBCol xl="8">
-//               <p className="ms-3">
-//                 Add additional notes and payment information
-//               </p>
-//             </MDBCol>
-//             <MDBCol xl="3">
-//               <p className="text-black float-start">
-//                 <span className="text-black me-3"> Total Amount</span>
-//                 <span style={{ fontSize: "25px" }}>
-//                   {billingRecords.billAmount}
-//                 </span>
-//               </p>
-//             </MDBCol>
-//           </MDBRow>
-//           <hr />
-//           <MDBRow>
-//             <MDBCol xl="10">
-//               <p>Thank you for your purchase</p>
-//             </MDBCol>
-//             <MDBCol xl="2">
-//               <MDBBtn
-//                 style={{ backgroundColor: "#60bdf3" }}
-//                 onClick={() => window.print()}
-//               >
-//                 Print
-//               </MDBBtn>
-//             </MDBCol>
-//           </MDBRow>
-//         </MDBCardBody>
-//       </MDBCard>
-//     </div>
-//   );
-// }
+import ReactPrint from "react-to-print";
+import { useRef } from "react";
+import Barcode from "react-barcode";
+import { useLocation } from "react-router-dom";
+import { MDBBtn } from "mdb-react-ui-kit";
+import "./Invoice.css";
+function Invoice({ props }) {
+  const location = useLocation();
+  const invoice = location.state;
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() + 1; // Months are zero-based, so we add 1
+  const day = currentDate.getDate();
+  console.log(invoice);
 
-// export default Invoice;
+  const ref = useRef();
+
+  return (
+    <>
+      <div className="containerinvoice" ref={ref}>
+        <div className="containerinvoice">
+          <div className="row">
+            <div>
+              <div className="col-md-12">
+                <div className="row">
+                  <div className="col-md-4 brcode">
+                    <Barcode
+                      value={`4n%${invoice.billingid}+ut%`}
+                      width={1}
+                      height={50}
+                      displayValue={false}
+                    />
+                  </div>
+                  <div className="col-md-8 text-right bbc">
+                    <h4 style={{ color: "#325aa8" }}>
+                      <strong>Company</strong>
+                    </h4>
+                    <p>(+91) 1234567890</p>
+                    <p>sample@gmail.com</p>
+                  </div>
+                </div>
+                <br />
+                <div className="row">
+                  <div className="col-md-12 text-center">
+                    <h2 style={{ color: "#325aa8" }}>INVOICE</h2>
+                    <h5> Id: {invoice.billingid}</h5>
+                  </div>
+                </div>
+                <br />
+                <div>
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+
+                        <th>User EmailId</th>
+                        <th>Pick Up Date</th>
+                        <th>Drop Date </th>
+                        <th>Car Category</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {invoice && (
+                        <tr key={invoice.billingid}>
+                          <td>{invoice.billingid}</td>
+                          <td>{invoice.custname}</td>
+                          <td>{invoice.emailid}</td>
+                          <td>{invoice.start_date}</td>
+                          <td>{invoice.end_date}</td>
+                          <td>{invoice.category}</td>
+                        </tr>
+                      )}
+                      <tr>
+                        <td colSpan="4" style={{ textAlign: "right" }}>
+                          Total Amount :
+                        </td>
+                        <td>{invoice.billamount}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                  <div className="col-md-12">
+                    <p>
+                      <b>Date :</b> {`${day}-${month}-${year}`}
+                    </p>
+                    <br />
+                    <p>
+                      <b>Name : {invoice.adminname}</b>
+                    </p>
+                    <p>
+                      <b>Contact: (+91) 1234567890</b>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+
+          textAlign: "left",
+
+          marginLeft: "700px",
+          marginBottom: "20px",
+        }}
+      >
+        <ReactPrint
+          trigger={() => <MDBBtn color="info">Print</MDBBtn>}
+          content={() => ref.current}
+          documentTitle={`INVOICE ${invoice.billingid}`}
+        />
+      </div>
+    </>
+  );
+}
+
+export default Invoice;

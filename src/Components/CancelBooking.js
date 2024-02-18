@@ -1,6 +1,7 @@
 import { MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
 
+import { MDBBtn } from "mdb-react-ui-kit";
 function CancelBooking() {
   const [email, setEmail] = useState("");
   const [booking, setBooking] = useState([]);
@@ -61,11 +62,17 @@ function CancelBooking() {
               <td>{book.end_date}</td>
               <td>{book.estamount}</td>
               <td>
-                <input
+                <MDBBtn
+                  className="me-1"
+                  color="danger"
                   type="button"
                   value="Cancel Booking"
-                  onClick={() => deleteBooking(book.bookingId)}
-                />
+                  onClick={() => {
+                    deleteBooking(book.bookingId);
+                  }}
+                >
+                  Danger
+                </MDBBtn>
               </td>
             </tr>
           ))}

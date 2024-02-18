@@ -50,7 +50,7 @@ function UserReg() {
       });
   };
   return (
-    <div className="container">
+    <div className="containerForm">
       <form className="customerForm" onSubmit={handleSubmit}>
         <br />
         <label>First Name</label>

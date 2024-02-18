@@ -18,6 +18,7 @@ function Handover() {
   const [cartypeName, setCartypeName] = useState(null);
   const [cars, setCars] = useState(null);
   const [selectcar, setSelectedcar] = useState(true);
+  const [selectedcarid, setselectedcarid] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
     function fetchinfo() {
@@ -27,16 +28,14 @@ function Handover() {
           .then((data) => {
             setBooking(data.booking);
             setCustomer(data);
-            console.log(data);
           })
           .catch((err) => console.log(err));
       }
     }
     fetchinfo();
   }, [email]);
+  console.log(book);
   function getDetails(id) {
-    console.log(id.hub_id);
-    console.log(id.car_id);
     setBook(id);
     function fetchinfo() {
       if (id.car_id) {
@@ -51,8 +50,10 @@ function Handover() {
     fetchinfo();
   }
   function getCars() {
-    if (book.car_id && book.hub_id) {
-      fetch(`http://localhost:8080/api/getcars/${book.hub_id}/${book.car_id}`)
+    if (book.car_id && book.pickuphub_id) {
+      fetch(
+        `http://localhost:8080/api/getcars/${book.pickuphub_id}/${book.car_id}`
+      )
         .then((res) => res.json())
         .then((data) => {
           setCars(data);
@@ -64,7 +65,7 @@ function Handover() {
 
   function setChange(id) {
     setSelectedcar((e) => !e);
-
+    setselectedcarid(id);
     fetch(`http://localhost:8080/${id}/availability?isAvailable=false`, {
       method: "PUT",
     })
@@ -72,6 +73,21 @@ function Handover() {
 
       .catch((err) => console.log(err));
   }
+  function updateBooking() {
+    if (book.bookingId && selectedcarid) {
+      fetch(
+        `http://localhost:8080/${book.bookingId}/updateCarcarid?carcarid=${selectedcarid}`,
+        {
+          method: "PUT",
+        }
+      )
+        .then((res) => console.log(res))
+        .then((err) => {
+          console.log(err);
+        });
+    }
+  }
+
   return (
     <div>
       <div style={{ display: "flex", alignItems: "center", margin: "20px" }}>
@@ -194,6 +210,7 @@ function Handover() {
         color="info"
         style={{ display: "flex", alignItems: "center", margin: "20px" }}
         onClick={() => {
+          updateBooking();
           alert("Handover Successfull.. ");
           navigate("/");
         }}
