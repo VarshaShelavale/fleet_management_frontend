@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
 import { useNavigate } from "react-router-dom";
 import "./Booking.module.css";
+import { blue } from "@mui/material/colors";
 
 function Booking() {
   const {
@@ -77,76 +78,80 @@ function Booking() {
   }
 
   return (
-    <form>
-      <h2>Booking Form</h2>
-      <div>
-        <label>Start Date:</label>
-        <input type="date" name="start_date" value={pickupDate} />
-      </div>
-      <div>
-        <label>End Date:</label>
-        <input type="date" name="end_date" value={returnDate} />
-      </div>
-      <div>
-        <label>Pickup Hub Name: {selectedpickHub[0].hub_Name}</label>
-        <br />
-        <label>Pickup Hub Address: {selectedpickHub[0].address}</label>
-      </div>
-      <div>
-        <label>Drop Hub Name: {selecteddropHub[0].hub_Name}</label>
-        <br />
-        <label>Drop Hub Address: {selecteddropHub[0].address}</label>
-      </div>
-      <div>
-        <input type="text" name="firstName" value={user.regId} hidden />
-      </div>
-      <div>
-        <label>First Name:</label>
-        <input type="text" name="firstName" value={user.firstName} />
-        <label>Last Name:</label>
-        <input type="text" name="lastName" value={user.lastName} />
-      </div>
-      <div>
-        <label>Mobile Number:</label>
-        <input type="text" name="mobileNumber" value={user.mobileNumber} />
-      </div>
-      <div>
-        <label>Email ID:</label>
-        <input type="email" name="emailId" value={user.emailId} />
-      </div>
-      <div>
-        <label>Driver's License Number:</label>
-        <input type="text" name="dLNumber" value={user.dLNumber} />
-      </div>
-      <div>
-        <label>Aadhar Number:</label>
-        <input type="text" name="aadharNo" value={user.aadharNo} />
-      </div>
-      <div>
-        <label>Passport Number:</label>
-        <input type="text" name="passportNo" value={user.passportNo} />
-      </div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "500px" /* Adjust the width as needed */,
+        height: "650px" /* Adjust the height as needed */,
+        textAlign: "left",
+        border: "2px solid #2e3437",
+        marginLeft: "500px",
+      }}
+    >
+      <form className="bookingform">
+        <h2>Booking Form</h2>
+        <div>
+          <label>Start Date: {pickupDate} </label>
+        </div>
+        <div>
+          <label>End Date: {returnDate}</label>
+        </div>
+        <div>
+          <label>Pickup Hub Name: {selectedpickHub[0].hub_Name}</label>
+          <br />
+          <label>Pickup Hub Address: {selectedpickHub[0].address}</label>
+        </div>
+        <div>
+          <label>Drop Hub Name: {selecteddropHub[0].hub_Name}</label>
+          <br />
+          <label>Drop Hub Address: {selecteddropHub[0].address}</label>
+        </div>
+        <div>
+          <input type="text" name="firstName" value={user.regId} hidden />
+        </div>
+        <div>
+          <label>First Name: {user.firstName}</label>
+        </div>
+        <div>
+          <label>Last Name: {user.lastName}</label>
+        </div>
+        <div>
+          <label>Mobile Number: {user.mobileNumber} </label>
+        </div>
+        <div>
+          <label>Email ID: {user.emailId}</label>
+        </div>
+        <div>
+          <label>Driver's License Number: {user.dLNumber}</label>
+        </div>
+        <div>
+          <label>Aadhar Number: {user.aadharNo} </label>
+        </div>
+        <div>
+          <label>Passport Number: {user.passportNo}</label>
+        </div>
 
-      <div>
-        <label>City:</label>
-        <input type="text" name="city" value={user.city} />
-      </div>
+        <div>
+          <label>City: {user.city}</label>
+        </div>
 
-      <div>
-        <label>Estimated Amount:</label>
-        <input type="number" step="0.01" name="estamount" value={estamt} />
-      </div>
-      <button type="submit" onClick={handleSubmit}>
-        Submit
-      </button>
-      <button
-        onClick={() => {
-          navigate("/cancelbooking");
-        }}
-      >
-        Cancel
-      </button>
-    </form>
+        <div>
+          <label>Estimated Amount: {estamt} </label>
+        </div>
+        <button type="submit" onClick={handleSubmit} style={{ margin: 10 }}>
+          Submit
+        </button>
+        <button
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Cancel
+        </button>
+      </form>
+    </div>
   );
 }
 

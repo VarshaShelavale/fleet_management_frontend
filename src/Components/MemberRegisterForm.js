@@ -5,6 +5,7 @@ import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsCont
 function MemberRegisterForm() {
   const navigate = useNavigate();
   const { login } = useSelectedOptions();
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -47,10 +48,11 @@ function MemberRegisterForm() {
       })
       .catch((error) => {
         console.error("Error:", error);
+        setErrorMessage("User Already exists!");
       });
   };
   return (
-    <div className="container">
+    <div className="containerForm">
       <form className="customerForm" onSubmit={handleSubmit}>
         <br />
         <label>First Name</label>
@@ -140,6 +142,7 @@ function MemberRegisterForm() {
           name="aadharNo"
           value={formData.aadharNo}
         />
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
         <button type="submit">Submit</button>
       </form>
     </div>

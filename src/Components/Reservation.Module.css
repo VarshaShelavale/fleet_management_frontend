@@ -2,31 +2,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 100vh; /* Make the container full height of the viewport */
 }
 
 .container {
-  background-color: #f0f8ff; /* Pastel blue background color */
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow */
-  margin-top: 100px; /* Adjust margin to prevent overlap with header */
-  max-width: 700px; /* Limit the width of the container */
-  margin: 0 auto; /* Center the container horizontally */
-  overflow: hidden;
+  display: flex;
+  max-width: 1200px; /* Adjust as needed */
+  width: 100%;
+  margin: 10 auto;
+  background-color: #aed9e0;
+  border-radius: 0.5%;
 }
 
 .left-section {
-  flex: 2;
+  flex: 1; /* Occupy 50% of the container width */
   padding: 20px;
 }
 
 .right-section {
-  flex: 2;
-  background-color: #c5d9e7;
+  flex: 1; /* Occupy 50% of the container width */
   padding: 20px;
 }
 
+.left-section img {
+  max-width: 100%; /* Make sure the image doesn't exceed its container */
+  height: auto; /* Maintain aspect ratio */
+}
 .form-group {
   display: flex;
   flex-wrap: wrap;

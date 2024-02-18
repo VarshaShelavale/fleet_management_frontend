@@ -10,6 +10,7 @@ function HubSelect() {
   const navigate = useNavigate();
   const { pickupCity } = useSelectedOptions();
   const { pairportid } = useSelectedOptions();
+  const [select, setSelected] = useState(true);
   useEffect((e) => {
     if (pickupCity) {
       fetch("http://localhost:8080/api/hubs/" + pickupCity)
@@ -37,6 +38,7 @@ function HubSelect() {
   const handleHubSelection = (event) => {
     console.log(event.target.value);
     setSelectedHub(event.target.value);
+    setSelected(false);
   };
   const submitForm = (e) => {
     e.preventDefault();
@@ -72,7 +74,7 @@ function HubSelect() {
             </label>
           </div>
         ))}
-        <button type="submit" className="continueButton">
+        <button type="submit" className="continueButton" disabled={select}>
           Continue Booking
         </button>
       </form>

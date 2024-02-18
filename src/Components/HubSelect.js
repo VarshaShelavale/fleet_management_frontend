@@ -10,6 +10,7 @@ function HubSelect() {
   const [hubs, setHubs] = useState([]);
   const [selectedHub, setSelectedHub] = useState("");
   const { setSelecteddropHub } = useSelectedOptions();
+  const [select, setSelected] = useState(true);
   const navigate = useNavigate();
   useEffect((e) => {
     if (state === "airportid") {
@@ -35,10 +36,11 @@ function HubSelect() {
   }, [selectedHub]);
   const handleHubSelection = (event) => {
     setSelectedHub(event.target.value);
+    setSelected(false);
   };
   const submitForm = (e) => {
     e.preventDefault();
-    // sessionStorage.setItem("returnHubId", selectedHub);
+
     navigate("/pickuphubs");
   };
   return (
@@ -70,7 +72,8 @@ function HubSelect() {
             </label>
           </div>
         ))}
-        <button type="submit" className="continueButton">
+
+        <button type="submit" className="continueButton" disabled={select}>
           Continue Booking
         </button>
       </form>

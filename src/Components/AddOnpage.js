@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Addon.css";
 import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
+import { MDBBtn } from "mdb-react-ui-kit";
 
 const AddOnpage = () => {
   const navigate = useNavigate();
@@ -48,11 +49,15 @@ const AddOnpage = () => {
           <br />
         </>
       ))}
-      <input
+
+      <MDBBtn
+        color="warning"
         type="submit"
         value="Continue booking"
         onClick={handleContinueClick}
-      />
+      >
+        Continue Booking
+      </MDBBtn>
     </div>
   );
 };

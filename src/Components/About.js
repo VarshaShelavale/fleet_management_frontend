@@ -9,8 +9,6 @@ function About() {
   };
 
   const rowStyle = {
-    border: "1px solid gray", // Add border
-    backgroundColor: "#c5d9e7", // Add gray background color
     padding: "20px", // Add padding for spacing
   };
 

@@ -36,10 +36,6 @@ function ReservationForm() {
       pickUpState: pstate,
       returnState: rstate,
     };
-    // sessionStorage.setItem("pickUpdate", pickupDate);
-    // sessionStorage.setItem("returndate", returnDate);
-    // sessionStorage.setItem("pickupcityid", pickupCity);
-    // sessionStorage.setItem("pickupairid", pairportid);
 
     console.log(data);
     if (rairportid) {
@@ -115,7 +111,9 @@ function ReservationForm() {
     <div>
       <div id="app">
         <div className="container">
-          <div className="left-section"></div>
+          <div className="left-section">
+            <img src="./Home.jpg"></img>
+          </div>
           <div className="right-section">
             <form onSubmit={handleSubmit}>
               <div className="form-group">

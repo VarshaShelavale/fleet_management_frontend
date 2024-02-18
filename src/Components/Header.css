@@ -3,7 +3,7 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background-color: #333;
+  background-color: #2e3437;
   color: #fff;
   overflow: auto; /* Add overflow to prevent collapsing */
 }
