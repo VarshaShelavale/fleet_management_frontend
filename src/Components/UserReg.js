@@ -5,6 +5,7 @@ import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsCont
 function UserReg() {
   const navigate = useNavigate();
   const { login } = useSelectedOptions();
+  const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -47,6 +48,7 @@ function UserReg() {
       })
       .catch((error) => {
         console.error("Error:", error);
+        setErrorMessage("User Already exists!");
       });
   };
   return (
@@ -140,6 +142,8 @@ function UserReg() {
           name="aadharNo"
           value={formData.aadharNo}
         />
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+
         <button type="submit">Continue Booking</button>
       </form>
     </div>

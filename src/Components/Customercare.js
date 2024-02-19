@@ -6,10 +6,11 @@ function Customercare() {
   const rowStyle = {
     // Add border
     backgroundColor: "#aed9e0", // Add gray background color
-    padding: "20px", // Add padding for spacing
+    padding: "30px",
+    // Add padding for spacing
   };
   return (
-    <Container>
+    <Container style={{ margin: "50px" }}>
       <Row style={rowStyle}>
         <div>
           <p>

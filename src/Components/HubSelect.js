@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./HubSelect.css";
 import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
-
+import { MDBBtn } from "mdb-react-ui-kit";
 function HubSelect() {
   const { id } = useParams();
   const location = useLocation();
@@ -74,9 +74,9 @@ function HubSelect() {
           </div>
         ))}
 
-        <button type="submit" className="continueButton" disabled={select}>
+        <MDBBtn type="submit" className="continueButton" disabled={select}>
           Continue Booking
-        </button>
+        </MDBBtn>
       </form>
     </div>
   );

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./Reservation.Module.css";
 import { useNavigate } from "react-router-dom";
 import { useSelectedOptions } from "./SelectedOptionsContext/SelectedOptionsContext";
+import { MDBBtn } from "mdb-react-ui-kit";
 function ReservationForm() {
   const { setpairport } = useSelectedOptions();
   const { pickupDate, setPickupDate } = useSelectedOptions();
@@ -22,6 +23,7 @@ function ReservationForm() {
   const [rstate, setrState] = useState("");
   const [pstate, setpState] = useState("");
   const navigate = useNavigate();
+
   const today = new Date().toISOString().split("T")[0];
   useEffect(function () {}, []);
   function handleSubmit(e) {
@@ -282,7 +284,9 @@ function ReservationForm() {
                 </div>
               )}
 
-              <button type="submit">Continue Booking</button>
+              <MDBBtn type="submit" className="continueButton">
+                Continue Booking
+              </MDBBtn>
             </form>
           </div>
         </div>

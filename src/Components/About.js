@@ -5,7 +5,9 @@ function About() {
   const containerStyle = {
     maxWidth: "800px", // Set maximum width for the container
     margin: "auto", // Center the container horizontally
-    padding: "20px", // Add padding for spacing
+    padding: "20px",
+    marginTop: "20px",
+    marginBottom: "20px", // Add padding for spacing
   };
 
   const rowStyle = {

@@ -7,11 +7,12 @@
 }
 
 .customerForm {
-  width: 500px; /* Adjust width as needed */
+  width: 600px; /* Adjust width as needed */
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #aed9e0;
+  margin: 30px;
 }
 
 .customerForm label {
